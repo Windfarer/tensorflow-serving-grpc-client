@@ -4,9 +4,11 @@ export TF_GIT_BRANCH=${TF_GIT_BRANCH:master}
 git clone -b ${TF_GIT_BRANCH} https://github.com/tensorflow/tensorflow.git
 git clone -b ${TF_GIT_BRANCH} https://github.com/tensorflow/serving.git
 
-mkdir -p serving_client
+mkdir -p client
 
-PROTOC_OPTS='-I tensorflow -I serving --go-grpc_out=serving_client'
+# protoc v1.6.1 
+# protoc-gen-go v1.4.2
+PROTOC_OPTS='-I tensorflow -I serving --go_out=plugins=grpc:client'
 
 eval "protoc $PROTOC_OPTS serving/tensorflow_serving/apis/*.proto"
 eval "protoc $PROTOC_OPTS serving/tensorflow_serving/config/*.proto"
